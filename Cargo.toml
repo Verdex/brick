@@ -6,4 +6,5 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+patterns = { path = "../../util/patterns", version = "0.1.0" }
 rparse = { path = "../rparse", version = "0.1.0" }

@@ -2,8 +2,10 @@
 #[macro_use]
 extern crate rparse;
 
+#[macro_use]
+extern crate patterns;
+
 mod grammar;
-mod grammar_util;
 
 fn main() {
     println!("Hello, world!");

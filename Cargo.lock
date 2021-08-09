@@ -6,8 +6,13 @@ version = 3
 name = "brick"
 version = "0.1.0"
 dependencies = [
+ "patterns",
  "rparse",
 ]
+
+[[package]]
+name = "patterns"
+version = "0.1.0"
 
 [[package]]
 name = "rparse"
