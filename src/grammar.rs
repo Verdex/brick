@@ -1,6 +1,6 @@
 
 use std::collections::HashMap;
-use rparse::{ParseRule, Data, Field, self};
+use rparse::{ParseRule, Data, self};
 
 fn whitespace(rules : &mut HashMap<String, ParseRule>) {
     rules.insert("whitespace".to_string()
@@ -32,6 +32,16 @@ pub fn parse(input : &str) -> Result<Data, ()> {
 mod test {
     use super::*;
 
+    fn next_data(data : &Data) -> Vec<&Data> {
+        match data {
+            Data::Nil => vec![],
+            Data::Char(_) => vec![],
+            Data::Field { data, .. } => vec![&data],
+            Data::List(list) => {
+                list.iter().collect::<Vec<&Data>>()
+            },
+        }
+    }
 
     #[test]
     fn should_parse_identifiers() -> Result<(), ()> {
@@ -44,29 +54,11 @@ mod test {
         
         let result = rparse::parse("main", &rules, "blah Blah _blah _901 blah_blah BLAH6")?;
 
-        let ids = result.find(|d| match d {
-            Data::Field(f) => {
-                let Field { rule, data } = &**f;
-                rule == "identifier"
-            },
-            _ => false,
-        });
+        let f : fn(&Data) -> Vec<&Data> = all_matches!(next_data, Data::List(_), Data::Field { .. }, Data::List(_), Data::List(_));
 
-        assert_eq!( ids.len(), 6) ;
+        println!( "{:?}", f(&result));
+        panic!("blarg");
 
-        let ids = ids.into_iter().map( |d| match d {
-            Data::Field(f) => match f.data {
-                Data::Table { list, .. } => list,
-                _ => panic!( "Field Data should be table"),
-            },
-            _ => panic!( "expected field"),
-        });
-
-        for id in ids {
-            println!("{:?}", id);
-        }
-
-        panic!("blar");
         Ok(())
     }
 }
