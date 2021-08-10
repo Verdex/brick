@@ -19,7 +19,16 @@ fn identifier(rules : &mut HashMap<String, ParseRule>) {
                 );
 }
 
+fn let_expr(rules : &mut HashMap<String, ParseRule>) {
+
+}
+
+fn lambda_expr(rules : &mut HashMap<String, ParseRule>) {
+
+}
+
 fn string_literal(rules : &mut HashMap<String, ParseRule>) {
+
 }
 
 fn bool_literal(rules : &mut HashMap<String, ParseRule>) {
