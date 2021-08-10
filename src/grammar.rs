@@ -20,11 +20,18 @@ fn identifier(rules : &mut HashMap<String, ParseRule>) {
 }
 
 fn string_literal(rules : &mut HashMap<String, ParseRule>) {
-
 }
 
 fn bool_literal(rules : &mut HashMap<String, ParseRule>) {
+    rules.insert( "true".to_string(), match_string!("true") );
+    rules.insert( "false".to_string(), match_string!("false") );
 
+    rules.insert( "bool_literal".to_string()
+                , and! { invoke_rule!( "whitespace" ) 
+                       , or!( invoke_rule!("true"), invoke_rule!("false") )
+                       , invoke_rule!( "whitespace" )
+                       }
+                );
 }
 
 fn number_literal(rules : &mut HashMap<String, ParseRule>) {
@@ -42,6 +49,7 @@ pub fn parse(input : &str) -> Result<Data, ()> {
     whitespace(&mut rules);
     identifier(&mut rules);
     number_literal(&mut rules);
+    bool_literal(&mut rules);
 
     rparse::parse("main", &rules, input)
 }
