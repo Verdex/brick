@@ -80,9 +80,9 @@ mod test {
 
     fn get_ids(data : &Data) -> Vec<String> {
 
-        let find : fn(&Data) -> Vec<&Data> = all_matches!(next_data, Data::List(_), Data::Field { .. }, Data::List(_), Data::List(_));
-        let find_first : fn(&Data) -> Vec<&Data> = all_matches!(next_data, Data::List(_), Data::Char(_));
-        let find_rest : fn(&Data) -> Vec<&Data> = all_matches!(next_data, Data::List(_), Data::List(_), Data::Char(_));
+        let find : fn(&Data) -> Vec<&Data> = all_path_matches!(next_data, Data::List(_), Data::Field { .. }, Data::List(_), Data::List(_));
+        let find_first : fn(&Data) -> Vec<&Data> = all_path_matches!(next_data, Data::List(_), Data::Char(_));
+        let find_rest : fn(&Data) -> Vec<&Data> = all_path_matches!(next_data, Data::List(_), Data::List(_), Data::Char(_));
 
         let proto = find(data);
 
@@ -99,7 +99,7 @@ mod test {
     }
 
     fn get_numbers(data : &Data) -> Vec<u32> {
-        let find : fn(&Data) -> Vec<&Data> = all_matches!( next_data
+        let find : fn(&Data) -> Vec<&Data> = all_path_matches!( next_data
                                                          , Data::List(_)
                                                          , Data::Field { .. }
                                                          , Data::List(_)
